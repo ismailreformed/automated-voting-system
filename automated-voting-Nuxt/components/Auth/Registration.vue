@@ -6,7 +6,7 @@
         <v-toolbar-title
           class="text-uppercase text-center font-weight-bold"
         >
-          Admin Registration
+          Voter Registration
         </v-toolbar-title>
         <v-spacer />
       </v-toolbar>
@@ -17,46 +17,68 @@
           lazy-validation
         >
           <v-row>
-            <v-col cols="12">
+            <v-col cols="6">
               <v-text-field
-                v-model="name"
+                v-model="voter_name"
                 color="secondary"
                 outlined
-                shaped
-                label="Name"
+                label="Voter Name"
                 hide-details="auto"
                 required
-                prepend-icon="mdi-account"
               />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <v-text-field
-                v-model="email"
+                v-model="age"
                 color="secondary"
-                :rules="emailRules"
                 outlined
-                shaped
-                label="Email"
+                label="Age"
                 hide-details="auto"
                 required
-                prepend-icon="mdi-account"
-                type="email"
               />
             </v-col>
-            <v-col cols="12">
+          </v-row>
+          <v-row>
+            <v-col cols="6">
               <v-text-field
-                v-model="password"
+                v-model="nid"
                 outlined
                 color="secondary"
-                :rules="passwordRules"
-                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                label="Password"
-                :type="showPassword ? 'text' : 'password'"
+                label="Voter NID Number"
                 hide-details="auto"
-                shaped
                 required
-                prepend-icon="mdi-lock"
-                @click:append="showPassword = !showPassword"
+              />
+            </v-col>
+            <v-col cols="6">
+              <v-text-field
+                v-model="user_name"
+                outlined
+                color="secondary"
+                label="User Name"
+                hide-details="auto"
+                required
+              />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="6">
+              <v-btn
+                depressed
+                color="success"
+                :loading="isLoading"
+                @click="scanFinger()"
+              >
+                Scan Finger
+              </v-btn>
+            </v-col>
+            <v-col cols="6">
+              <v-text-field
+                v-model="finger_print_id"
+                outlined
+                color="secondary"
+                label="Finger Print Id"
+                hide-details="auto"
+                required
               />
             </v-col>
           </v-row>
@@ -102,7 +124,6 @@
 </template>
 
 <script>
-// import { mapGetters } from 'vuex'
 import User from "@/static/helpers/User.js";
 
 export default {
@@ -119,17 +140,12 @@ export default {
   data: () => ({
     isLoading: false,
     valid: true,
-    showPassword: false,
-    name: '',
-    email: '',
-    password: '',
-    emailRules: [
-      v => !!v || 'Email is required'
-    ],
 
-    passwordRules: [
-      v => !!v || 'Password is required'
-    ],
+    voter_name: '',
+    age: '',
+    nid: '',
+    user_name: '',
+    finger_print_id: '',
 
     isLoggedIn: false,
     snackbar: false,
@@ -144,14 +160,13 @@ export default {
   },
 
   computed: {
-    // ...mapGetters({
-    //   authToken: 'auth/auth'
-    // }),
     loginInfo () {
       return {
-        name: this.name,
-        email: this.email,
-        password: this.password
+        voter_name: this.voter_name,
+        age: this.age,
+        nid: this.nid,
+        user_name: this.user_name,
+        finger_print_id: this.finger_print_id,
       }
     }
   },
@@ -199,7 +214,6 @@ export default {
             // console.log(error)
             // console.log(error.response.data.errors)
             // this.$toast.error("error.response.data.errors");
-
           })
           .finally(() => {
             this.isLoading = false
@@ -207,14 +221,14 @@ export default {
       }
     },
 
-    checkAuth (next, path) {
-      // only admin-group has the access to any property without association
-      if (this.authToken !== null) {
-        this.$router.push('/')
-      } else {
-        this.$router.push('/auth')
-      }
-    }
+    // checkAuth (next, path) {
+    //   // only admin-group has the access to any property without association
+    //   if (this.authToken !== null) {
+    //     this.$router.push('/')
+    //   } else {
+    //     this.$router.push('/auth')
+    //   }
+    // }
   }
 }
 </script>

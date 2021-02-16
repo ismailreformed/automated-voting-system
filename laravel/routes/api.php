@@ -22,10 +22,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/user', function () {
-    return ['user' => 'Shahed'];
-});
-
 //-------------------------------------------------------------------------------
 Route::group([
 
@@ -39,7 +35,6 @@ Route::group([
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
 });
-
 
 //------------------------------------------------------------
 Route::Resource('/bus','BusController');

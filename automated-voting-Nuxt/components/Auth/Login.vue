@@ -4,7 +4,7 @@
       <v-toolbar dark class="text-center" flat>
         <v-spacer />
         <v-toolbar-title class="text-uppercase text-center font-weight-bold">
-          Admin Login
+          Voter Login
         </v-toolbar-title>
         <v-spacer />
       </v-toolbar>
@@ -13,32 +13,25 @@
           <v-row>
             <v-col cols="12">
               <v-text-field
-                v-model="email"
+                v-model="user_name"
                 color="secondary"
-                :rules="emailRules"
+                :rules= "userNameRules"
                 outlined
-                shaped
-                label="Email"
+                label="User Name"
                 hide-details="auto"
                 required
                 prepend-icon="mdi-account"
-                type="email"
               />
             </v-col>
             <v-col cols="12">
               <v-text-field
-                v-model="password"
+                v-model="finger_print_id"
                 outlined
                 color="secondary"
-                :rules="passwordRules"
-                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                label="Password"
-                :type="showPassword ? 'text' : 'password'"
+                label="Finger Print Id"
                 hide-details="auto"
-                shaped
                 required
                 prepend-icon="mdi-lock"
-                @click:append="showPassword = !showPassword"
               />
             </v-col>
           </v-row>
@@ -74,9 +67,8 @@
     </v-snackbar>
   </div>
 </template>
-<script>
-// import { mapGetters } from 'vuex'
 
+<script>
 import User from "@/static/helpers/User.js";
 
 export default {
@@ -93,12 +85,11 @@ export default {
   data: () => ({
     isLoading: false,
     valid: true,
-    showPassword: false,
-    email: "",
-    password: "",
-    emailRules: [v => !!v || "Email is required"],
+    user_name: "",
+    finger_print_id: "",
+    userNameRules: [v => !!v || "User Name is required"],
 
-    passwordRules: [v => !!v || "Password is required"],
+    // fingerPrintRules: [v => !!v || "Finger Print Id is required"],
 
     isLoggedIn: false,
     snackbar: false,
@@ -112,8 +103,8 @@ export default {
     // }),
     loginInfo() {
       return {
-        email: this.email,
-        password: this.password
+        user_name: this.user_name,
+        finger_print_id: this.finger_print_id
       };
     }
   },
@@ -166,8 +157,8 @@ export default {
             this.errorColor = "error";
             this.snackbar = true;
             // eslint-disable-next-line no-console
-            // console.log(error);
-            // console.log(error.response.data);
+            console.log(error);
+            console.log(error.response.data);
             // this.$toast.error("Email or Password Invalid");
           })
           .finally(() => {

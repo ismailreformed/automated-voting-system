@@ -4,9 +4,9 @@
       Welcome to
     </h3>
     <h1 class="text-center blue--text mb-2">
-      Bus Driver Health Monitoring System
+      Automated Voting System
     </h1>
-    <!-- <v-card
+    <v-card
       class="mx-auto"
       max-width="500"
     >
@@ -14,7 +14,7 @@
         src="https://image.freepik.com/free-vector/picture-bus-with-busdriver-inside-standing-bus-stop-style-illustration_285336-325.jpg"
         height="350px"
       ></v-img>
-    </v-card> -->
+    </v-card>
   </div>
 </template>
 

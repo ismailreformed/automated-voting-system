@@ -30,14 +30,14 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $validateData = $request->validate([
-            'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'min:4'],
+            'user_name' => ['required', 'min:4', 'string', 'max:255'],
+            'finger_print_id' => ['required', 'min:4'],
         ]);
 
-        $credentials = request(['email', 'password']);
+        $credentials = request(['user_name', 'finger_print_id']);
 
         if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Email or Password is Invalid'], 401);
+            return response()->json(['error' => 'User or Finger Print field is Invalid'], 401);
         }
 
         return $this->respondWithToken($token);
@@ -79,15 +79,19 @@ class AuthController extends Controller
     public function signup(Request $request)    //---------------------------
     {
         $validateData = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'min:4'],
+            'voter_name' => ['required', 'string', 'max:255'],
+            'age' => ['required', 'numeric'],
+            'nid' => ['required', 'min:4', 'unique:users'],
+            'user_name' => ['required', 'min:4', 'string', 'max:255'],
+            'finger_print_id' => ['required', 'min:4', 'unique:users'],
         ]);
 
         $data = array();
-        $data['name'] = $request->name;
-        $data['email'] = $request->email;
-        $data['password'] = Hash::make($request->password);
+        $data['voter_name'] = $request->voter_name;
+        $data['age'] = $request->age;
+        $data['nid'] = $request->nid;
+        $data['user_name'] = $request->user_name;
+        $data['finger_print_id'] = Hash::make($request->finger_print_id);
 
         DB::table('users')->insert($data);
 
@@ -107,9 +111,9 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type'   => 'bearer',
             'expires_in'   => auth()->factory()->getTTL() * 60,
-            'name'         => auth()->user()->name,             //--OR-- Auth::user()->name
+            'user_name'     => auth()->user()->user_name,             //--OR-- Auth::user()->name
             'user_id'      => auth()->user()->id,
-            'email'        => auth()->user()->email,            //-- Auth::user()->email
+            'finger_print_id' => auth()->user()->finger_print_id,         //-- Auth::user()->email
         ]);
     }
 }

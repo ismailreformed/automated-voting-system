@@ -30,7 +30,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Bus Driver Health Monitor'
+      title: 'Automated Voting System'
     }
   }
 }
